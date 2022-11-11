@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200;400;500;700&display=swap');
+// Import all of Bootstrap's CSS
+@import "~bootstrap/scss/bootstrap";
+
+$sidenavWidth: 17vw;
+$borderRadius: 15px;
+
+$primary: #f9ba19;
+$black: #000000;
+$white: #ffffff;
+$light: #ededed;
+$grey: #9e9e9e;
+$basicTransition: all .4s ease-in-out;
+;
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: $light;
+}
+
+#main {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidenav {
+    width: $sidenavWidth;
+    min-height: 100vh;
+    background-color: $light;
+    color: $black;
+    justify-content: center;
+    align-items: flex-start;
+    gap: .5em 1em;
+
+    &__button {
+        background-color: transparent;
+        border: none;
+    }
+
+    .accordion-main {
+        width: 100%;
+        border-top-right-radius: $borderRadius;
+        border-bottom-right-radius: $borderRadius;
+
+    }
+
+    &__button,
+    .accordion-main button {
+        width: 100%;
+        padding: 1em;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        border-top-right-radius: $borderRadius  !important;
+        border-bottom-right-radius: $borderRadius  !important;
+
+        &:hover {
+            background-color: $white;
+            transition: $basicTransition;
+        }
+
+        img {
+            height: 24px;
+            width: auto;
+            padding-right: .5em;
+            margin-top: -2px;
+        }
+
+    }
+
+    .accordion-main button {
+        background-color: $primary;
+
+        &.collapsed {
+            background-color: transparent;
+        }
+    }
+
+}
+
+.activeEl {
+    background-color: $primary;
+}
+
+.checked p {
+    text-decoration: line-through;
+}
+
+.checked .task__checkbox {
+    background-color: $primary;
+}
+
+#content {
+    width: calc(100vw - $sidenavWidth);
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+    .tasks,
+    .noteAll {
+        width: 90%;
+        background-color: white;
+        border-radius: 30px;
+        overflow-y: auto;
+        padding: 4em;
+        margin: 2em;
+        transition: all .6s linear;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+
+        &__header,
+        .note__header {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 1em;
+
+            .high,
+            .medium,
+            .low {
+                border-radius: $borderRadius;
+                font-weight: bold;
+                padding: 0.5em;
+                margin-right: 10px;
+                font-size: .85rem;
+            }
+
+            .high {
+                background-color: rgb(209, 28, 28);
+                color: $white;
+            }
+
+            .medium {
+                background-color: rgb(252, 237, 26);
+                color: black;
+            }
+
+            .low {
+                background-color: rgb(22, 187, 96);
+                color: $white;
+            }
+
+            &__title,
+            &__date {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+
+            &__date {
+                font-weight: 500;
+                color: $grey;
+                margin-left: 10px;
+            }
+
+            &__desc {
+                display: block;
+                margin-top: 1em;
+                padding-left: .5em;
+            }
+
+            &__checkbox {
+                width: 1.5rem;
+                aspect-ratio: 1 / 1;
+                border: 2px solid black;
+                border-radius: 100%;
+                cursor: pointer;
+                transition: $basicTransition;
+            }
+
+            button {
+                border: none;
+                background-color: $primary;
+                color: black;
+                text-transform: uppercase;
+                border-radius: $borderRadius;
+                padding: .5em 1em;
+                transition: $basicTransition;
+                font-weight: bold;
+
+                &:hover {
+                    background-color: $black;
+                    color: $white;
+                }
+            }
+
+        }
+    }
+
+    .newTask {
+        border: none;
+        background-color: $primary;
+        color: black;
+        text-transform: uppercase;
+        border-radius: $borderRadius;
+        padding: .5em 1em;
+        transition: $basicTransition;
+        font-weight: bold;
+        font-size: 1.5rem;
+
+        &:hover {
+            background-color: $black;
+            color: $white;
+        }
+    }
+}
+
+.addTask {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.459);
+
+    &__form {
+        width: 60vw;
+        height: 50vh;
+        background-color: white;
+        padding: 30px;
+        border-radius: 30px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.329);
+        overflow-y: auto;
+    }
+
+    &__close {
+        float: right;
+        width: 30px;
+        height: 30px;
+        background-color: black;
+        border: none;
+        color: white;
+        border-radius: 100%;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+
+        h2 {
+            color: $primary;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 60%;
+            text-align: center;
+            border: none;
+            border-bottom: 2px solid $primary;
+        }
+
+        select {
+            border-radius: 15px;
+            padding: .5em 1em;
+            border: 2px solid $primary;
+            background-color: $white;
+            cursor: pointer;
+        }
+
+        #dateForm {
+            width: auto;
+            cursor: pointer;
+        }
+
+        #submitForm,
+        #submitEditTask,
+        #submitEditNote {
+            background-color: $primary;
+            color: $black;
+            font-weight: bold;
+            border-radius: $borderRadius;
+            width: 150px;
+            padding: .5em 1em;
+            text-transform: uppercase;
+            transition: $basicTransition;
+
+            &:hover {
+                background-color: black;
+                color: white;
+            }
+        }
+    }
+
+
+}
+
+#projects {
+
+    li {
+        display: flex;
+        gap: 0 10px;
+        align-items: center;
+        margin: 1em 0;
+        font-weight: bold;
+        cursor: pointer;
+
+        .project {
+            border-bottom: 2px solid transparent;
+
+            &:hover {
+                border-bottom: 2px solid black;
+                transition: $basicTransition;
+            }
+
+        }
+
+        .deleteProject {
+            border: 1px solid transparent;
+            padding: 0 0.25rem;
+            cursor: pointer;
+            color: rgb(184, 26, 26);
+
+            &:hover {
+                transform: scale(1.2);
+                transform-origin: center;
+                transition: $basicTransition;
+            }
+        }
+    }
+
+}
+
+.editNote,
+.deleteNote {
+    display: block;
+    margin: 1.5em auto;
+    width: 140px;
+    text-align: center;
+    border: none;
+    background-color: $primary;
+    color: black;
+    text-transform: uppercase;
+    border-radius: $borderRadius;
+    padding: .5em 1em;
+    transition: $basicTransition;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $black;
+        color: $white;
+    }
+}
+
+.newProject {
+
+    display: flex;
+    gap: 0 10px;
+    padding-left: 2rem;
+
+    #addProject {
+        width: 60px;
+        border: none;
+        background-color: $primary;
+        color: $black;
+        border-radius: 10px;
+        padding: .5em 0;
+        font-weight: bold;
+    }
+
+    #projectNameForm {
+        width: calc(100% - 60px);
+        background-color: transparent;
+        color: black;
+        border: none;
+        border-bottom: 2px solid black;
+    }
+
+
+}
+
+#notes {
+
+    .note {
+        display: flex;
+        gap: 0 10px;
+        align-items: center;
+        margin: 1em 0;
+        font-weight: bold;
+        list-style: none;
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+
+        &:hover {
+            margin-left: 10px;
+            transition: $basicTransition;
+        }
+
+    }
+}
+
+.note__content {
+    padding-top: 2em;
+}
+
+.addNote {
+    width: auto !important;
+    border: none;
+    padding-right: 1.5em;
+}
