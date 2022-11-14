@@ -1,6 +1,7 @@
 import {arrToLocal} from "./localStorage.js";
 import { printTask, taskForm, checkedFunc, deleteProject} from './taskFunc.js';
 import { getDMY, addMonths } from './dateConvert.js';
+import { showAcc, showSide } from "./animation.js";
 
 export function showTasks(projectName, arr) {
 
@@ -126,6 +127,8 @@ export function showProjects(arrProject, arrTasks) {
     document.querySelectorAll(".project").forEach((element) => {
         element.addEventListener('click', () => {
             showTasks(element.textContent, arrTasks);
+            showSide(); 
+            showAcc();
         })
     });
 

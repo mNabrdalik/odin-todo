@@ -23,18 +23,30 @@ body {
     min-height: 100vh;
 }
 
+h1 {
+    margin-top: .45em;
+    margin-left: .45em;
+    margin-bottom: 1em;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
 .sidenav {
     width: $sidenavWidth;
     min-height: 100vh;
     background-color: $light;
     color: $black;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     gap: .5em 1em;
 
     &__button {
         background-color: transparent;
         border: none;
+    }
+
+    &__menu {
+        display: none;
     }
 
     .accordion-main {
@@ -60,9 +72,9 @@ body {
         }
 
         img {
-            height: 24px;
+            height: 20px;
             width: auto;
-            padding-right: .5em;
+            padding-right: 1em;
             margin-top: -2px;
         }
 
@@ -216,7 +228,8 @@ body {
 }
 
 .addTask {
-    position: absolute;
+    position: fixed;
+    top: 0;
     display: flex;
     justify-content: center;
     top: 0;
@@ -224,6 +237,7 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
+    z-index: 999;
     background-color: rgba(0, 0, 0, 0.459);
 
     &__form {
@@ -415,4 +429,164 @@ body {
     width: auto !important;
     border: none;
     padding-right: 1.5em;
+}
+
+// tablet
+@media only screen and (max-width: 885px) {
+
+    $sidenavWidth: 20vw;
+
+    .sidenav {
+        width: $sidenavWidth;
+    }
+
+    #content .newTask {
+        font-size: 1.25rem;
+    }
+
+    #content .tasks,
+    #content .noteAll {
+        padding: 2em 1em;
+    }
+
+    .addTask__form {
+        width: 75vw;
+        height: 60vh;
+    }
+
+    .addTask__content h2,
+    #content .tasks__header,
+    #content .tasks .note__header,
+    #content .noteAll__header,
+    #content .noteAll .note__header {
+        font-size: 1.5rem;
+    }
+
+    #projects,
+    .newProject {
+        padding-left: 1rem;
+    }
+
+    .newProject {
+        display: block;
+
+        #projectNameForm {
+            width: 100%;
+            margin-bottom: 1em;
+            font-size: 14px;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    $sidenavWidth: 22vw;
+
+    .sidenav {
+        width: $sidenavWidth;
+    }
+
+    body,
+    .accordion-button {
+        font-size: 14px;
+    }
+
+}
+
+@media only screen and (max-width: 660px) {
+
+    html {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.75rem;
+        margin-bottom: 0;
+    }
+
+    #main {
+        flex-direction: column;
+
+        .sidenav {
+            width: 100vw;
+            min-height: unset;
+            position: fixed;
+            top: 0;
+            justify-content: flex-start;
+
+            &__header {
+                align-items: center;
+                width: 100vw;
+                background-color: $light;
+                padding-bottom: 1em;
+            }
+
+            &__menu {
+                display: block;
+                margin-top: 1em;
+                margin-left: 1em;
+            }
+
+            &__button,
+            .accordion-main button {
+
+                &:hover {
+                    background-color: $primary;
+                }        
+            }
+        }
+
+        #content {
+            width: 100vw;
+
+            .task {
+
+                &__title,
+                &__date {
+                    font-size: 1rem;
+                }
+            }
+
+        }
+    }
+
+    .sidenav__button,
+    .accordion-main {
+        margin-top: -500px;
+        transition: all 1s ease-in-out ;
+    }
+    
+    .show {
+        margin-top: 0;
+    }
+
+    #content .tasks, #content .noteAll {
+        margin-top: 60px;
+    }
+
+    #content .newTask {
+        margin-bottom: 60px;
+    }
+
+}
+
+@media only screen and (max-width: 440px) {
+
+    .addTask__form {
+        width: 90vw;
+    }
+
+    .addTask__content input, .addTask__content textarea {
+        width: 80%;
+    }
+
+    #content .tasks .task, #content .noteAll .task {
+        flex-wrap: wrap;
+        border-bottom: 2px solid black;
+    }
+
+    .addTask__close {
+        position: absolute;
+        right: 10vw;
+    }
 }

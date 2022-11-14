@@ -3,10 +3,11 @@ import 'bootstrap';
 
 import './scss/style.scss';
 
-import {storageAvailable} from "./localStorage.js";
-import {showTasks, todayTasks, showProjects, weekTasks }  from './tasks.js';
-import {projectForm, projectFormRender} from './projects.js';
-import {showNotes, addNote} from './notes.js';
+import { storageAvailable } from "./localStorage.js";
+import { showTasks, todayTasks, showProjects, weekTasks } from './tasks.js';
+import { projectForm, projectFormRender } from './projects.js';
+import { showNotes, addNote } from './notes.js';
+import { showSide, showAcc } from './animation.js';
 
 //ogarnąć localstorage
 //stylowanie
@@ -15,24 +16,24 @@ import {showNotes, addNote} from './notes.js';
 if (storageAvailable('localStorage')) {
     // Yippee! We can use localStorage awesomeness
     // console.log("Available localStorage");
-  }
-  else {
+}
+else {
     // Too bad, no localStorage for us
     // console.log("No localStorage");
-  }
+}
 
 //taks priority: low(green)/medium(yellow)/high(red)
-if(localStorage.getItem("projects") == null) {
+if (localStorage.getItem("projects") == null) {
     const projectsDefault = ["inbox", "Project 01", "Project 02"];
     const tasksDefault = [
-    
+
         {
             "id": 0,
             "title": "Exercise",
             "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "medium",
             "project": "inbox",
-            "date" : new Date("2022-10-28"),
+            "date": new Date("2022-10-28"),
             "isDone": false,
         },
         {
@@ -41,7 +42,7 @@ if(localStorage.getItem("projects") == null) {
             "description": "Lorem ipsum dolor consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "high",
             "project": "inbox",
-            "date" : new Date("2022-10-12"),
+            "date": new Date("2022-10-12"),
             "isDone": true,
         },
         {
@@ -50,7 +51,7 @@ if(localStorage.getItem("projects") == null) {
             "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "low",
             "project": "inbox",
-            "date" : new Date("2022-10-28"),
+            "date": new Date("2022-10-28"),
             "isDone": false,
         },
         {
@@ -59,7 +60,7 @@ if(localStorage.getItem("projects") == null) {
             "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "low",
             "project": "inbox",
-            "date" : new Date("2022-10-28"),
+            "date": new Date("2022-10-28"),
             "isDone": false,
         },
         {
@@ -68,7 +69,7 @@ if(localStorage.getItem("projects") == null) {
             "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "low",
             "project": "Project 01",
-            "date" : new Date("2022-10-31"),
+            "date": new Date("2022-10-31"),
             "isDone": false,
         },
         {
@@ -77,7 +78,7 @@ if(localStorage.getItem("projects") == null) {
             "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "medium",
             "project": "Project 01",
-            "date" : new Date("2022-11-02"),
+            "date": new Date("2022-11-02"),
             "isDone": false,
         },
         {
@@ -86,13 +87,13 @@ if(localStorage.getItem("projects") == null) {
             "description": "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi, earum?",
             "priority": "low",
             "project": "Project 02",
-            "date" : new Date("2022-11-01"),
+            "date": new Date("2022-11-01"),
             "isDone": false,
         }
-    
-    
+
+
     ];
-    
+
     const notesDefault = [
         {
             id: 0,
@@ -105,7 +106,7 @@ if(localStorage.getItem("projects") == null) {
             content: "Mollitia exercitationem veniam repellendus harum minima ea omnis et modi possimus maxime quidem voluptatem quaerat explicabo autem, dignissimos nobis. Laudantium, at ratione."
         }
     ]
-    
+
     //data to json
     let jsonProjects = JSON.stringify(projectsDefault);
     let jsonTasks = JSON.stringify(tasksDefault);
@@ -138,17 +139,22 @@ tasks.forEach((element) => {
 
 function component() {
     const main = document.createElement('div');
-    main.setAttribute('id', 'main'); 
+    main.setAttribute('id', 'main');
 
     main.innerHTML += `
     <div class="sidenav d-flex flex-column">
-        <button class="inbox sidenav__button"><img src="./img/inbox.svg" alt="inbox icon">INBOX</button>
-        <button class="today sidenav__button"><img src="./img/star.svg" alt="today icon">TODAY</button>
-        <button class="thisWeek sidenav__button" ><img src="./img/calendar.svg" alt="week icon">THIS WEEK</button>
+    <div class="d-flex sidenav__header">
+        <img class="sidenav__menu" width="32" height="32" src="./img/menu.png" alt="menu">
+        <h1>Tasks Lists</h1>
+    </div>
+        
+        <button class="inbox sidenav__button"><img src="./img/inbox.svg" alt="inbox icon"><span>INBOX</span></button>
+        <button class="today sidenav__button"><img src="./img/star.svg" alt="today icon"><span>TODAY</span></button>
+        <button class="thisWeek sidenav__button" ><img src="./img/calendar.svg" alt="week icon"><span>THIS WEEK</span></button>
         <div class="accordion-item accordion-main">
             <p class="accordion-header" id="headingProject">
             <button class="accordion-button accordion-projects collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#projectsList" aria-expanded="false" aria-controls="projectsList">
-            <img src="./img/files-stack.svg" alt="project icon"> PROJECTS
+            <img src="./img/files-stack.svg" alt="project icon"> <span>PROJECTS</span>
             </button>
             </p>
             <div id="projectsList" class="accordion-collapse collapse" aria-labelledby="headingProject" data-bs-parent="#accordionExample">
@@ -161,7 +167,7 @@ function component() {
         <div class="accordion-item accordion-main">
             <p class="accordion-header" id="headingNotes">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#notesList" aria-expanded="false" aria-controls="notesList">
-            <img src="./img/notebook.svg" alt="notes icon"> NOTES
+            <img src="./img/notebook.svg" alt="notes icon"> <span>NOTES</span>
             </button>
             </p>
             <div id="notesList" class="accordion-collapse collapse" aria-labelledby="headingNotes" data-bs-parent="#accordionExample">
@@ -188,46 +194,59 @@ function component() {
 
 document.body.appendChild(component());
 
-document.querySelector(".inbox").addEventListener("click", (e) => {
+//onclicks
+
+document.querySelector(".inbox").addEventListener("click", () => {
     showTasks("inbox", tasks);
-    activeElement(e);
+    activeElement(".inbox");
+    showSide();
+    showAcc();
 });
 
 document.querySelector(".today").addEventListener("click", (e) => {
     todayTasks(new Date(), tasks);
-    activeElement(e);
+    activeElement(".today");
+    showSide();
+    showAcc();
 });
 
 document.querySelector(".thisWeek").addEventListener("click", (e) => {
     weekTasks(tasks);
-    activeElement(e);
+    activeElement(".thisWeek");
+    showSide();
+    showAcc();
 });
 
 document.querySelector("#headingProject").addEventListener("click", () => {
     showProjects(projects, tasks);
-    activeElement("");
+    activeElement("#headingProject");
 });
 
 document.querySelector("#headingNotes").addEventListener("click", () => {
     showNotes(notes);
-    activeElement("");
+    activeElement("#headingNotes");
 });
 
-document.querySelector("#addNote").addEventListener("click", () => {addNote(notes)});
+document.querySelector("#addNote").addEventListener("click", () => { addNote(notes) });
 
 projectForm();
 
-document.querySelector("#addProject").addEventListener("click", () => {projectFormRender(projects, tasks)});
+document.querySelector("#addProject").addEventListener("click", () => { projectFormRender(projects, tasks) });
 
 function activeElement(x) {
     document.querySelectorAll(".sidenav__button").forEach(element => {
         element.classList.remove("activeEl");
     })
 
-    //path[0] - clicked <> 
-    if(x != "") {
-        x.path[0].classList.add("activeEl");
+    document.querySelectorAll(".accordion-header").forEach(element => {
+        element.classList.remove("activeEl");
+    })
 
-    }
- 
+    document.querySelector(x).classList.add("activeEl");
+
 }
+
+document.querySelector(".sidenav__menu").addEventListener("click", () => {
+    showSide();
+    showAcc();
+})

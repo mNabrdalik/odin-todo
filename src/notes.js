@@ -1,4 +1,5 @@
 import {arrToLocal} from "./localStorage.js";
+import { showAcc, showSide } from "./animation.js";
 
 class Note {
 
@@ -70,6 +71,8 @@ export function showNotes(arr) {
     document.querySelectorAll(".note").forEach(element => {
         element.addEventListener('click', () => {
             showNote(element, arr);
+            showSide(); 
+            showAcc();
         })
     })
 
